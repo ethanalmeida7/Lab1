@@ -1,0 +1,53 @@
+﻿@page
+@model Lab1.Pages.Lessons.LessonReservationModel
+<h2>Lesson Reservation</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Student">Student</label>
+        <select class="form-control" id="Student" name="StudentID" asp-items="Model.StudentOptions" required>
+            <option value="">-- Select Student --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Tutor">Tutor</label>
+        <select class="form-control" id="Tutor" name="TutorID" asp-items="Model.TutorOptions" required>
+            <option value="">-- Select Tutor --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Room">Room (Optional)</label>
+        <select class="form-control" id="Room" name="RoomID" asp-items="Model.RoomOptions">
+            <option value="">-- Select Room --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Date">Lesson Date</label>
+        <input type="date" class="form-control" id="Date" name="Date" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Time">Lesson Time</label>
+        <input type="time" class="form-control" id="Time" name="Time" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Duration">Lesson Duration (in hours)</label>
+        <input type="number" class="form-control" id="Duration" name="Duration" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Subject">Lesson Subject</label>
+        <input type="text" class="form-control" id="Subject" name="Subject" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Notes">Notes (Optional)</label>
+        <textarea class="form-control" id="Notes" name="Notes"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Reserve Lesson</button>
+</form>
