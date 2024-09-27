@@ -109,7 +109,7 @@ namespace Lab1.Pages.Lessons
                 DBClass.OpenConnection();
 
                 // Insert the lesson reservation into the Lessons table
-                string query = "INSERT INTO Lessons (Subject, Notes, Date, Time, Duration, StudentID, TutorID, RoomID) " +
+                string query = "INSERT INTO Lessons (Subjects, Notes, Dates, Times, Duration, StudentID, TutorID, RoomID) " +
                                "VALUES (@Subject, @Notes, @Date, @Time, @Duration, @StudentID, @TutorID, @RoomID)";
                 SqlCommand cmd = new SqlCommand(query, DBClass.Lab1DBConnection);
                 cmd.Parameters.AddWithValue("@Subject", Subject);
@@ -128,7 +128,7 @@ namespace Lab1.Pages.Lessons
                 DBClass.CloseConnection();
 
                 // Redirect to a success page after reservation
-                return RedirectToPage("/Lessons/Success");
+                return RedirectToPage("/Registration/Success");
             }
             catch (Exception ex)
             {
