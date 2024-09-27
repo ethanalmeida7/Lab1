@@ -99,7 +99,7 @@ namespace Lab1.Pages.Reservation
                 DBClass.CloseConnection();
 
                 // Redirect to a success page after room reservation
-                return RedirectToPage("/Reservation/Success");
+                return RedirectToPage("/Registration/Success");
             }
             catch (Exception ex)
             {

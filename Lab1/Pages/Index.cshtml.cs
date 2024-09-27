@@ -1,8 +1,8 @@
-using Lab1.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using Lab1.Pages.DB;
 
 namespace Lab1.Pages
 {
@@ -42,7 +42,7 @@ namespace Lab1.Pages
 
                 // Fetch group reservations
                 string reservationQuery = @"SELECT G.GroupName, R.Locations AS RoomName, 
-                                                   Res.Date, Res.Time, Res.Duration, Res.Description 
+                                                   Res.RentalDate, Res.RentalDuration
                                             FROM Reservations Res
                                             JOIN Groups G ON Res.GroupID = G.GroupID
                                             JOIN Room R ON Res.RoomID = R.RoomID";
@@ -54,10 +54,8 @@ namespace Lab1.Pages
                     {
                         GroupName = reservationReader["GroupName"].ToString(),
                         RoomName = reservationReader["RoomName"].ToString(),
-                        Date = (DateTime)reservationReader["Date"],
-                        Time = (TimeSpan)reservationReader["Time"],
-                        Duration = (int)reservationReader["Duration"],
-                        Description = reservationReader["Description"].ToString()
+                        Date = (DateTime)reservationReader["RentalDate"],
+                        Duration = (int)reservationReader["RentalDuration"]  // Handle RentalDuration as int
                     });
                 }
                 reservationReader.Close();
@@ -85,9 +83,7 @@ namespace Lab1.Pages
             public string GroupName { get; set; }
             public string RoomName { get; set; }
             public DateTime Date { get; set; }
-            public TimeSpan Time { get; set; }
             public int Duration { get; set; }
-            public string Description { get; set; }
         }
     }
 }

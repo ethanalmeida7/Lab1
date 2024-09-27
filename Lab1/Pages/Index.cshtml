@@ -39,9 +39,7 @@
                 <th>Group</th>
                 <th>Room</th>
                 <th>Date</th>
-                <th>Time</th>
                 <th>Duration (Hours)</th>
-                <th>Description</th>
             </tr>
         </thead>
         <tbody>
@@ -51,9 +49,7 @@
                     <td>@reservation.GroupName</td>
                     <td>@reservation.RoomName</td>
                     <td>@reservation.Date.ToShortDateString()</td>
-                    <td>@reservation.Time.ToString("hh\\:mm")</td>
-                    <td>@reservation.Duration</td>
-                    <td>@reservation.Description</td>
+                    <td>@reservation.Duration.ToString(@"hh\:mm")</td>
                 </tr>
             }
         </tbody>
