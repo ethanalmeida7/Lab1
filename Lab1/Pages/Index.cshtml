@@ -1,10 +1,57 @@
 ﻿@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
+@model Lab1.Pages.IndexModel
+<h2>Scheduled Lessons</h2>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Tutor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Duration (hours)</th>
+            <th>Subject</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lesson in Model.Lessons)
+        {
+            <tr>
+                <td>@lesson.StudentName</td>
+                <td>@lesson.TutorName</td>
+                <td>@lesson.Date.ToShortDateString()</td>
+                <td>@lesson.Time.ToString("hh\\:mm")</td>
+                <td>@lesson.Duration</td>
+                <td>@lesson.Subject</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Group Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Group</th>
+            <th>Room</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Duration (hours)</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.GroupName</td>
+                <td>@reservation.RoomName</td>
+                <td>@reservation.Date.ToShortDateString()</td>
+                <td>@reservation.Time.ToString("hh\\:mm")</td>
+                <td>@reservation.Duration</td>
+                <td>@reservation.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>

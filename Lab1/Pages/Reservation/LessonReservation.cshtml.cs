@@ -25,7 +25,7 @@ namespace Lab1.Pages.Lessons
         public TimeSpan Time { get; set; }
 
         [BindProperty]
-        public int Duration { get; set; }
+        public DateTime Duration { get; set; }
 
         [BindProperty]
         public string Subject { get; set; }
@@ -109,7 +109,7 @@ namespace Lab1.Pages.Lessons
                 DBClass.OpenConnection();
 
                 // Insert the lesson reservation into the Lessons table
-                string query = "INSERT INTO Lessons (Subject, Notes, Date, Time, Duration, StudentID, TutorID, RoomID) " +
+                string query = "INSERT INTO Lessons (Subject, Notes, Dates, Times, Duration, StudentID, TutorID, RoomID) " +
                                "VALUES (@Subject, @Notes, @Date, @Time, @Duration, @StudentID, @TutorID, @RoomID)";
                 SqlCommand cmd = new SqlCommand(query, DBClass.Lab1DBConnection);
                 cmd.Parameters.AddWithValue("@Subject", Subject);
