@@ -57,5 +57,18 @@ namespace Lab1.Pages.Registration
                 return Page();
             }
         }
+
+        public IActionResult OnPostPopulateHandler()
+        {
+            ModelState.Clear();
+            FirstName = "Johnny";
+            LastName = "Appleseed";
+            PhoneNumber = "7032342202";
+            Email = "jappleseed@gmail.com";
+
+            Console.WriteLine("Am i getting called");
+
+            return Page();
+        }
     }
 }

@@ -86,5 +86,17 @@ namespace Lab1.Pages.Registration
                 return Page();
             }
         }
+
+        public IActionResult OnPostPopulateHandler()
+        {
+            ModelState.Clear();
+
+            FirstName = "Joseph";
+            LastName = "Appleseed";
+            ParentID = 1;
+            
+
+            return Page();
+        }
     }
 }

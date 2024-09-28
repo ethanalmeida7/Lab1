@@ -51,5 +51,17 @@ namespace Lab1.Pages.Registration
                 return Page();
             }
         }
+
+        public IActionResult OnPostPopulateHandler()
+        {
+            ModelState.Clear();
+
+            GroupName = "YoungLife";
+            GroupDescription = "Group of Friends";
+            PhoneNumber = "5713239032";
+            Email = "jmuyounglife@gmail.com";
+
+            return Page();
+        }
     }
 }
