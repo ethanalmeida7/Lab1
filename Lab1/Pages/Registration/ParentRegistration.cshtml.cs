@@ -26,9 +26,14 @@ namespace Lab1.Pages.Registration
         [EmailAddress]
         public string Email { get; set; }
 
-        // Handles form submission
-        public IActionResult OnPost()
+        // Handles form submission or populate action
+        public IActionResult OnPost(string action)
         {
+            if (action == "populate")
+            {
+                return OnPostPopulateHandler();  // Call the populate handler
+            }
+
             try
             {
                 // Open the connection
@@ -48,8 +53,8 @@ namespace Lab1.Pages.Registration
                 // Close the connection
                 DBClass.CloseConnection();
 
-                // Redirect to a confirmation or success page (optional)
-                return RedirectToPage("/Registration/Success");  // This would be another page you'd create for confirmation
+                // Redirect to a confirmation or success page
+                return RedirectToPage("/Registration/Success");
             }
             catch (Exception ex)
             {
@@ -58,15 +63,16 @@ namespace Lab1.Pages.Registration
             }
         }
 
+        // Handler to populate form fields with default values
         public IActionResult OnPostPopulateHandler()
         {
-            ModelState.Clear();
+            ModelState.Clear();  // Clear the form's validation state
+
+            // Populate the fields with default values
             FirstName = "Johnny";
             LastName = "Appleseed";
             PhoneNumber = "7032342202";
             Email = "jappleseed@gmail.com";
-
-            Console.WriteLine("Am i getting called");
 
             return Page();
         }

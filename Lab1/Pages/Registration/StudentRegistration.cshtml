@@ -13,11 +13,11 @@
     </div>
     <div class="form-group">
         <label for="Parent">Parent</label>
-        <select class="form-control" id="Parent" name="ParentID" asp-items="Model.ParentOptions" value="@Model.ParentID" required>
+        <select class="form-control" id="Parent" name="ParentID" asp-items="Model.ParentOptions" required>
             <option value="">-- Select Parent --</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-danger">Register Student</button>
-    <button asp-page-handler="PopulateHandler" formnovalidate class="btn btn-secondary">Populate</button>
+    <button type="submit" class="btn btn-danger" name="action" value="register">Register Student</button>
+    <button type="submit" class="btn btn-secondary" name="action" value="populate" formnovalidate>Populate</button>
 </form>

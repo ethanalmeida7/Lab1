@@ -1,4 +1,4 @@
-using Lab1.Pages.DB;
+using Lab1.Pages.DB;  // For database connections
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
@@ -56,9 +56,14 @@ namespace Lab1.Pages.Registration
             }
         }
 
-        // Handles form submission
-        public IActionResult OnPost()
+        // Handles form submission or populate action
+        public IActionResult OnPost(string action)
         {
+            if (action == "populate")
+            {
+                return OnPostPopulateHandler();  // Call the populate handler
+            }
+
             try
             {
                 // Open the connection
@@ -78,7 +83,7 @@ namespace Lab1.Pages.Registration
                 DBClass.CloseConnection();
 
                 // Redirect to a success page
-                return RedirectToPage("/Registration/Success");  
+                return RedirectToPage("/Registration/Success");
             }
             catch (Exception ex)
             {
@@ -87,14 +92,19 @@ namespace Lab1.Pages.Registration
             }
         }
 
+        // Populate form fields with default values without database interaction
         public IActionResult OnPostPopulateHandler()
         {
             ModelState.Clear();
 
+            // Hard-code the default values
             FirstName = "Joseph";
             LastName = "Appleseed";
-            ParentID = 1;
-            
+            ParentOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "Johnny Appleseed" }  // Hard-coded parent
+            };
+            ParentID = 1;  // Hard-coded ParentID for the populated parent
 
             return Page();
         }

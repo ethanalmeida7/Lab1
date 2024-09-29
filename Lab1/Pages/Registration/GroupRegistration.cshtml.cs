@@ -19,9 +19,14 @@ namespace Lab1.Pages.Registration
         [BindProperty]
         public string Email { get; set; }
 
-        // Handles the form submission to register a group
-        public IActionResult OnPost()
+        // Handles form submission or populate action
+        public IActionResult OnPost(string action)
         {
+            if (action == "populate")
+            {
+                return OnPostPopulateHandler();  // Call populate handler
+            }
+
             try
             {
                 // Open the connection
@@ -52,16 +57,19 @@ namespace Lab1.Pages.Registration
             }
         }
 
+        // Handler for populating default values
         public IActionResult OnPostPopulateHandler()
         {
+            // Clear model state so default values are correctly displayed
             ModelState.Clear();
 
+            // Populate with default values
             GroupName = "YoungLife";
             GroupDescription = "Group of Friends";
             PhoneNumber = "5713239032";
             Email = "jmuyounglife@gmail.com";
 
-            return Page();
+            return Page();  // Return the page with populated fields
         }
     }
 }
