@@ -13,7 +13,7 @@ namespace Lab1.Pages.DB
 
         // Connection String - How to find and connect to DB
         private static readonly string Lab1DBConnString =
-            "Server=Localhost;Database=Lab1;Trusted_Connection=True";
+            "Server=Localhost;Database=Lab2;Trusted_Connection=True";
 
         // Method to Open Connection
         public static void OpenConnection()
@@ -34,6 +34,28 @@ namespace Lab1.Pages.DB
             }
         }
 
-        
+
+        public static int LoginQuery(string loginQuery)
+        {
+            // This method expects to receive an SQL SELECT
+            // query that uses the COUNT command.
+
+            SqlCommand cmdLogin = new SqlCommand();
+            cmdLogin.Connection = Lab1DBConnection;
+            cmdLogin.Connection.ConnectionString = Lab1DBConnString;
+            cmdLogin.CommandText = loginQuery;
+            cmdLogin.Connection.Open();
+
+            // ExecuteScalar() returns back data type Object
+            // Use a typecast to convert this to an int.
+            // Method returns first column of first row.
+            int rowCount = (int)cmdLogin.ExecuteScalar();
+
+            return rowCount;
+
+            
+        }
+
+
     }
 }
