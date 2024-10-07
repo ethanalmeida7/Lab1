@@ -27,6 +27,11 @@ namespace Lab1.Pages.Registration
                 return OnPostPopulateHandler();  // Call populate handler
             }
 
+            if(action == "clear")
+            {
+                return OnPostClear();
+            }
+
             try
             {
                 // Open the connection
@@ -70,6 +75,18 @@ namespace Lab1.Pages.Registration
             Email = "jmuyounglife@gmail.com";
 
             return Page();  // Return the page with populated fields
+        }
+
+        public IActionResult OnPostClear()
+        {
+            GroupName = string.Empty;
+            GroupDescription = string.Empty;
+            PhoneNumber = string.Empty;
+            Email = string.Empty;
+
+            ModelState.Clear();
+
+            return Page();
         }
     }
 }
