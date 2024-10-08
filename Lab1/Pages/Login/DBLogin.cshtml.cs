@@ -1,6 +1,8 @@
 using Lab1.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+using System.Data.SqlClient;
 
 namespace Lab1.Pages.Login
 {
@@ -8,10 +10,11 @@ namespace Lab1.Pages.Login
     {
         [BindProperty]
         public string Username { get; set; }
+
         [BindProperty]
         public string Password { get; set; }
 
-        public IActionResult OnGet(String logout)
+        public IActionResult OnGet(string logout)
         {
             if (logout == "true")
             {
@@ -22,34 +25,63 @@ namespace Lab1.Pages.Login
             return Page();
         }
 
+     
+
         public IActionResult OnPost()
         {
-            string loginQuery = "SELECT COUNT(*) FROM Credential where Username = '";
-            loginQuery += Username + "' and Password='" + Password + "'";
-
-            if (DBClass.LoginQuery(loginQuery) > 0)
+            try
             {
-                HttpContext.Session.SetString("username", Username);
-                DBClass.Lab1DBConnection.Close();
+                // Secure query using parameters to prevent SQL injection
+                string loginQuery = "SELECT COUNT(*) FROM Credential WHERE Username = @Username AND Password = @Password";
 
-                return RedirectToPage("/Registration/Success");
+                using (var command = new SqlCommand(loginQuery, DBClass.Lab1DBConnection))
+                {
+                    command.Parameters.AddWithValue("@Username", Username);
+                    command.Parameters.AddWithValue("@Password", Password);
 
+                    // Open DB connection
+                    DBClass.Lab1DBConnection.Open();
+
+                    // Check if the user exists in the database
+                    int userCount = (int)command.ExecuteScalar();
+
+                    if (userCount > 0)
+                    {
+                        // Set session for the logged-in user
+                        HttpContext.Session.SetString("Username", Username);
+
+                        // Close DB connection
+                        DBClass.Lab1DBConnection.Close();
+
+                        // Redirect to a success page
+                        return RedirectToPage("/Registration/Success");
+                    }
+                    else
+                    {
+                        // Invalid credentials
+                        ViewData["LoginMessage"] = "Username and/or Password Incorrect";
+
+                        // Close DB connection
+                        DBClass.Lab1DBConnection.Close();
+
+                        return Page();
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ViewData["LoginMessage"] = "Username and/or Password Incorrect";
-                DBClass.Lab1DBConnection.Close();
+                // Handle any exceptions that occur
+                ViewData["LoginMessage"] = "An error occurred: " + ex.Message;
                 return Page();
-
             }
-
-
         }
 
         public IActionResult OnPostLogoutHandler()
         {
+            // Clear session on logout
             HttpContext.Session.Clear();
-            return Page();
+            ViewData["LoginMessage"] = "Successfully Logged Out!";
+            return RedirectToPage("/Login/DBLogin");
         }
     }
 }
