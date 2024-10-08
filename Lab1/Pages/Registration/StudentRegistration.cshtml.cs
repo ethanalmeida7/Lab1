@@ -64,6 +64,11 @@ namespace Lab1.Pages.Registration
                 return OnPostPopulateHandler();  // Call the populate handler
             }
 
+            if (action == "clear")
+            {
+                return OnPostClear();
+            }
+
             try
             {
                 // Open the connection
@@ -107,6 +112,14 @@ namespace Lab1.Pages.Registration
             ParentID = 1;  // Hard-coded ParentID for the populated parent
 
             return Page();
+        }
+
+        public IActionResult OnPostClear() 
+        { 
+           FirstName = string.Empty; 
+           LastName = string.Empty;
+            
+           return Page(); 
         }
     }
 }
