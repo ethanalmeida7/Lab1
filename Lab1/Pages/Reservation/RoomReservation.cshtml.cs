@@ -28,8 +28,15 @@ namespace Lab1.Pages.Reservation
         public List<SelectListItem> RoomOptions { get; set; }
 
         // This method runs when the page is accessed via a GET request
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            // Check if the user is logged in using session
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                // Redirect to login page if not logged in
+                return RedirectToPage("/Login/DBLogin");
+            }
+
             GroupOptions = new List<SelectListItem>();
             RoomOptions = new List<SelectListItem>();
 
@@ -73,11 +80,20 @@ namespace Lab1.Pages.Reservation
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+
+            return Page();  // Return the page if the user is logged in
         }
 
         // Handles the form submission to reserve a room
         public IActionResult OnPost()
         {
+            // Check if the user is logged in using session
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                // Redirect to login page if not logged in
+                return RedirectToPage("/Login/DBLogin");
+            }
+
             try
             {
                 // Open the connection

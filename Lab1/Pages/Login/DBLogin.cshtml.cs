@@ -25,7 +25,7 @@ namespace Lab1.Pages.Login
             return Page();
         }
 
-     
+
 
         public IActionResult OnPost()
         {
@@ -47,8 +47,18 @@ namespace Lab1.Pages.Login
 
                     if (userCount > 0)
                     {
-                        // Set session for the logged-in user
-                        HttpContext.Session.SetString("Username", Username);
+                        // New query to fetch ParentID based on the Username
+                        string parentQuery = "SELECT ParentID FROM Credential WHERE Username = @Username";
+
+                        using (var parentCommand = new SqlCommand(parentQuery, DBClass.Lab1DBConnection))
+                        {
+                            parentCommand.Parameters.AddWithValue("@Username", Username);
+                            int parentID = (int)parentCommand.ExecuteScalar(); // Retrieve ParentID
+
+                            // Set session for the logged-in user
+                            HttpContext.Session.SetString("Username", Username);
+                            HttpContext.Session.SetString("ParentID", parentID.ToString());
+                        }
 
                         // Close DB connection
                         DBClass.Lab1DBConnection.Close();

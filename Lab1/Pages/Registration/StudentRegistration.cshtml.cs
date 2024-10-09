@@ -22,8 +22,12 @@ namespace Lab1.Pages.Registration
         public List<SelectListItem> ParentOptions { get; set; }
 
         // Load Parent options on GET request
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                return RedirectToPage("/Login/DBLogin");  // Redirect to login page if not logged in
+            }
             ParentOptions = new List<SelectListItem>();
 
             try
@@ -53,7 +57,9 @@ namespace Lab1.Pages.Registration
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+                return Page();
             }
+            return Page();
         }
 
         // Handles form submission or populate action

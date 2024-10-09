@@ -1,0 +1,55 @@
+﻿@page
+@model Lab1.Pages.OwnerDashboardModel
+@{
+    ViewData["Title"] = "Owner Dashboard";
+}
+
+<h2>All Scheduled Lessons</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Tutor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Duration (Hours)</th>
+            <th>Subject</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lesson in Model.Lessons)
+        {
+            <tr>
+                <td>@lesson.StudentName</td>
+                <td>@lesson.TutorName</td>
+                <td>@lesson.Date.ToShortDateString()</td>
+                <td>@lesson.Time.ToString("hh\\:mm")</td>
+                <td>@lesson.Duration</td>
+                <td>@lesson.Subject</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>All Group Reservations</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Group</th>
+            <th>Room</th>
+            <th>Date</th>
+            <th>Duration (Hours)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.GroupName</td>
+                <td>@reservation.RoomName</td>
+                <td>@reservation.Date.ToShortDateString()</td>
+                <td>@reservation.Duration</td>
+            </tr>
+        }
+    </tbody>
+</table>

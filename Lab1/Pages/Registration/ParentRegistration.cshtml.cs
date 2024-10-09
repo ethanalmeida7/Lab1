@@ -25,7 +25,18 @@ namespace Lab1.Pages.Registration
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+        public IActionResult OnGet()
+        {
+            // Check if the session is set (i.e., the user is logged in)
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                // Redirect to the login page if the user is not logged in
+                return RedirectToPage("/Login/DBLogin");
+            }
 
+            // Return the page if the user is logged in
+            return Page();
+        }
         // Handles form submission or populate action
         public IActionResult OnPost(string action)
         {

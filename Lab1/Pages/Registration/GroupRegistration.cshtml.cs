@@ -1,10 +1,12 @@
 using Lab1.Pages.DB;  // For database connections
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 
 namespace Lab1.Pages.Registration
 {
+   
     public class GroupRegistrationModel : PageModel
     {
         [BindProperty]
@@ -18,6 +20,19 @@ namespace Lab1.Pages.Registration
 
         [BindProperty]
         public string Email { get; set; }
+
+        public IActionResult OnGet()
+        {
+            // Check if the session is set (i.e., the user is logged in)
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                // Redirect to the login page if the user is not logged in
+                return RedirectToPage("/Login/DBLogin");
+            }
+
+            // Return the page if the user is logged in
+            return Page();
+        }
 
         // Handles form submission or populate action
         public IActionResult OnPost(string action)

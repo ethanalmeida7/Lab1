@@ -1,4 +1,4 @@
-using Lab1.Pages.DB;
+using Lab1.Pages.DB;  // For database connections
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
@@ -38,8 +38,15 @@ namespace Lab1.Pages.Lessons
         public List<SelectListItem> RoomOptions { get; set; }
 
         // On page load, fetch the students, tutors, and rooms
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            // Check if the user is logged in using session
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                // Redirect to login page if not logged in
+                return RedirectToPage("/Login/DBLogin");
+            }
+
             StudentOptions = new List<SelectListItem>();
             TutorOptions = new List<SelectListItem>();
             RoomOptions = new List<SelectListItem>();
@@ -98,11 +105,20 @@ namespace Lab1.Pages.Lessons
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+
+            return Page();  // Return the page if the user is logged in
         }
 
         // Handles form submission
         public IActionResult OnPost()
         {
+            // Check if the user is logged in using session
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                // Redirect to login page if not logged in
+                return RedirectToPage("/Login/DBLogin");
+            }
+
             try
             {
                 // Open the connection
