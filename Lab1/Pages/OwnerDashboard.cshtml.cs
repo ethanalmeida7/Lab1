@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Lab1.Pages
 {
@@ -12,10 +13,15 @@ namespace Lab1.Pages
         public List<Lesson> Lessons { get; set; } = new List<Lesson>();
         public List<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("Username") != "admin")
+            {
+                return RedirectToPage("/Login/DBLogin");  // Redirect to login page if not logged in
+            }
             try
             {
+
                 DBClass.OpenConnection();
 
                 // Fetch all lessons, ordered by date
@@ -64,13 +70,16 @@ namespace Lab1.Pages
                 reservationReader.Close();
 
                 DBClass.CloseConnection();
+
+                return Page();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            return Page();
         }
-
+        
         public class Lesson
         {
             public string StudentName { get; set; }
