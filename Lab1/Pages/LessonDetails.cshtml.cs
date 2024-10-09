@@ -8,7 +8,7 @@ namespace Lab1.Pages
 {
     public class LessonDetailsModel : PageModel
     {
-        public LessonDetails Lesson { get; set; }  // Changed to LessonDetails
+        public LessonDetails Lesson { get; set; } 
 
         public void OnGet(int lessonId)
         {
@@ -30,7 +30,7 @@ namespace Lab1.Pages
 
                 if (reader.Read())
                 {
-                    Lesson = new LessonDetails  // Changed to LessonDetails
+                    Lesson = new LessonDetails  
                     {
                         StudentName = reader["StudentName"].ToString(),
                         TutorName = reader["TutorName"].ToString(),
@@ -51,7 +51,7 @@ namespace Lab1.Pages
             }
         }
 
-        public class LessonDetails  // Changed class name to LessonDetails
+        public class LessonDetails  
         {
             public string StudentName { get; set; }
             public string TutorName { get; set; }
