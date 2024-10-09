@@ -15,6 +15,7 @@ namespace Lab1.Pages
 
         public IActionResult OnGet()
         {
+
             // Retrieve the logged-in username and ParentID from session
             string username = HttpContext.Session.GetString("Username");
             string parentID = HttpContext.Session.GetString("ParentID");
