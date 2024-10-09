@@ -35,26 +35,5 @@
         </tbody>
     </table>
 
-    <h2>Group Reservations</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Group</th>
-                <th>Room</th>
-                <th>Date</th>
-                <th>Duration (Hours)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var reservation in Model.Reservations)
-            {
-                <tr>
-                    <td>@reservation.GroupName</td>
-                    <td>@reservation.RoomName</td>
-                    <td>@reservation.Date.ToShortDateString()</td>
-                    <td>@reservation.Duration</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    
 </div>
