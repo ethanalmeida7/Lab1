@@ -63,17 +63,9 @@ namespace Lab1.Pages.Registration
         }
 
         // Handles form submission or populate action
-        public IActionResult OnPost(string action)
+        public IActionResult OnPost()
         {
-            if (action == "populate")
-            {
-                return OnPostPopulateHandler();  // Call the populate handler
-            }
-
-            if (action == "clear")
-            {
-                return OnPostClear();
-            }
+            
 
             try
             {
@@ -103,29 +95,5 @@ namespace Lab1.Pages.Registration
             }
         }
 
-        // Populate form fields with default values without database interaction
-        public IActionResult OnPostPopulateHandler()
-        {
-            ModelState.Clear();
-
-            // Hard-code the default values
-            FirstName = "Joseph";
-            LastName = "Appleseed";
-            ParentOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "Johnny Appleseed" }  // Hard-coded parent
-            };
-            ParentID = 1;  // Hard-coded ParentID for the populated parent
-
-            return Page();
-        }
-
-        public IActionResult OnPostClear() 
-        { 
-           FirstName = string.Empty; 
-           LastName = string.Empty;
-            
-           return Page(); 
-        }
     }
 }
